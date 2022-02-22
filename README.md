@@ -3,9 +3,12 @@
 This document can be used as a reference for those who are in the process of migrating their application from MailUp SOAP API to MailUp REST API.
 If you need more details you can create an issue on this Github project.
 
-As you probably know, MailUp SOAP API methods belong to one of these domains: WSMailUpImport, MailUpSend, MailUpReport and MailUpManage. The following paragraphs map the methods of each domain to the MailUp REST API methods with the corresponding behaviour. There are few cases in which there is not an exact 1:1 matching, a detailed page is available for those methods.
+As you probably know, MailUp SOAP API methods belong to one of these domains: WSMailUpImport, MailUpSend, MailUpReport and MailUpManage. The following paragraphs map the methods of each domain to the MailUp REST API methods with the corresponding behaviour. There are few cases in which there is not an exact 1:1 matching, a detailed page is available for those exceptions.
 
-
+* [WSMailUpImport](#wsmailupimport-methods)
+* [MailUpSend](#mailupsend-methods)
+* [MailUpReport](#mailupreport-methods)
+* [MailUpManage](#mailupmanage-methods)
 
 ## WSMailUpImport methods
 
@@ -25,6 +28,13 @@ Access and account management
 | ------------- | ------------- |-----------|
 | Login or LoginFromId  | Authentication using OAuth 2.0  | [Read more]() |
 |Logout| No longer required  | |
+|CreateList|`POST /ConsoleService.svc/Console/List`|[Create List](https://help.mailup.com/display/mailupapi/Manage+Lists+and+Groups#ManageListsandGroups-CreateListcreatelist)|
+|GetLists or GetListsUser|`GET /ConsoleService.svc/Console/List`|[Read Lists](https://help.mailup.com/display/mailupapi/Manage+Lists+and+Groups#ManageListsandGroups-ReadLists)|
+|GetListIdentity|No longer supported (related to a deprecated integration)||
+|DeleteList|`DELETE /ConsoleService.svc/Console/List/{id_List} `|[Delete List](https://help.mailup.com/display/mailupapi/Manage+Lists+and+Groups#ManageListsandGroups-DeleteList)|
+|GetGroups|`GET /ConsoleService.svc/Console/List/{ID_LIST}/Groups`|[Read groups](https://help.mailup.com/display/mailupapi/Manage+Lists+and+Groups#ManageListsandGroups-ReadGroups)|
+|GetIdUser|`GET /ConsoleService.svc/Console/Authentication/Info`| [Get user ID](https://help.mailup.com/display/mailupapi/Accounts) |
+|GetFields or GetFields_st|`GET /ConsoleService.svc/Console/Recipient/DynamicFields`|[Read personal data fields configuration](https://help.mailup.com/display/mailupapi/Recipients#Recipients-Readpersonaldatafieldsconfiguration)|
 
 
 SMS
@@ -32,7 +42,7 @@ SMS
 | ------------- | ------------- |-----------|
 |CreateSMS|`POST /ConsoleService.svc/Console/Sms/List/{id_List}/Message`  | [Create SMS](https://help.mailup.com/display/mailupapi/Text+messages+-+SMS#TextmessagesSMS-Createamessage) |
 |SendSingleSMS, SendSMSFast or SendDirectSMS|Use Transactional SMS API to send single SMSs (i.e. "one to one")  | [Read more]() |
-|SendSMS|`POST /ConsoleService.svc/Console/Sms/List/{id_List}/Message/{id_Message}/Send` (send to all list recipients) or `POST /ConsoleService.svc/Console/Sms/Group/{id_Group}/Message/{id_Message}/Send` (send to a group)  | [Send bulk SMS](https://help.mailup.com/display/mailupapi/Text+messages+-+SMS#TextmessagesSMS-Sendatextmessage) |
+|SendSMS|`POST /ConsoleService.svc/Console/Sms/List/{id_List}/Message/{id_Message}/Send` (send to all list's recipients) or `POST /ConsoleService.svc/Console/Sms/Group/{id_Group}/Message/{id_Message}/Send` (send to a group)  | [Send bulk SMS](https://help.mailup.com/display/mailupapi/Text+messages+-+SMS#TextmessagesSMS-Sendatextmessage) |
 |GetCredits or GetCreditsLists|`POST /ConsoleService.svc/Console/Authentication/Details`  | [Read credits](https://help.mailup.com/display/mailupapi/Accounts) |
 |GetSMS|`POST /ConsoleService.svc/Console/Sms/List/{id_List}/Messages`  | [Get SMS](https://help.mailup.com/display/mailupapi/Accounts) |
 |GetSMSDeliveryStatus|`POST /ConsoleService.svc/Console/Sms/Sendings/Immediate`  | [Read/manage SMS queue](https://help.mailup.com/display/mailupapi/Text+messages+-+SMS#TextmessagesSMS-ManageSendQueue) |
@@ -41,5 +51,41 @@ Email
 | SOAP Method Name  | Alternative method using REST API |Reference|
 | ------------- | ------------- |-----------|
 |SendSingleNewsletter|Use Transactional Email API or SMTP+  | [Read more]() |
-|GetSMS|`POST /ConsoleService.svc/Console/Sms/List/{id_List}/Messages`  | [Get SMS](https://help.mailup.com/display/mailupapi/Accounts) |
+|CreateNewsletter|`POST /ConsoleService.svc/Console/List/{id_List}/Email`  | [Create newsletter](https://help.mailup.com/display/mailupapi/Email+messages#Emailmessages-Createamessage) |
+|CloneMessage|``||
+|GetNewsletters|``||
+|GetMessages|``||
+|GetNewsletterCode|``||
+|SendMessageNL|``||
+|SendNewsletter|``||
+|SendNewsletterFast|``||
+|GetNewsletterDeliveryStatus|``||
+|GetNewsletterQueues|``||
+|StartDelivery|``||
+|RemoveNewsletterQueue|``||
 
+
+## MailUpReport methods
+
+| SOAP Method Name  | Alternative method using REST API |Reference|
+| ------------- | ------------- |-----------|
+| Login or LoginFromId  | Authentication using OAuth 2.0  | [Read more]() |
+|Logout| No longer required  | |
+|ReportByUser or ReportByUserEN|Has to be replaced by a sequence of API calls|[Read more]() |
+|ReportByMessage or ReportByMessageEN|Use `GET /MailStatisticsService.svc/Message/{ID_MESSAGE}/List/Recipients` (delivered) `GET /MailStatisticsService.svc/Message/{ID_MESSAGE}/List/Views` (opens) `GET /MailStatisticsService.svc/Message/{ID_MESSAGE}/List/Clicks` (clicks)|[Stats by message](https://help.mailup.com/display/mailupapi/Email+Statistics#EmailStatistics-GetStatisticsbyMessage) |
+
+## MailUpManage methods
+
+| SOAP Method Name  | Alternative method using REST API |Reference|
+| ------------- | ------------- |-----------|
+| Login or LoginFromId  | Authentication using OAuth 2.0  | [Read more]() |
+|Logout| No longer required  | |
+| CreateGroup  | `POST ConsoleService.svc/Console/List/{ID_LIST}/Group`  | [Create group](https://help.mailup.com/display/mailupapi/Manage+Lists+and+Groups#ManageListsandGroups-CreateGroup) |
+|GetGroups|`GET /ConsoleService.svc/Console/List/{ID_LIST}/Groups`|[Read groups](https://help.mailup.com/display/mailupapi/Manage+Lists+and+Groups#ManageListsandGroups-ReadGroups)|
+|UpdateGroup|`PUT /ConsoleService.svc/Console/List/{ID_LIST}/Group/{ID_GROUP}`|[Update group](https://help.mailup.com/display/mailupapi/Manage+Lists+and+Groups#ManageListsandGroups-Updategroup)|
+|DeleteGroup|`DELETE /ConsoleService.svc/Console/List/{ID_LIST}/Group/{ID_GROUP}`|[Delete Group](https://help.mailup.com/display/mailupapi/Manage+Lists+and+Groups#ManageListsandGroups-DeleteGroup)|
+|CreateList|`POST /ConsoleService.svc/Console/List`|[Create List](https://help.mailup.com/display/mailupapi/Manage+Lists+and+Groups#ManageListsandGroups-CreateListcreatelist)|
+|GetLists or GetListsUser|`GET /ConsoleService.svc/Console/List`|[Read Lists](https://help.mailup.com/display/mailupapi/Manage+Lists+and+Groups#ManageListsandGroups-ReadLists)|
+|UpdateList|`PUT /ConsoleService.svc/Console/List/{id_List} `|[Update List](https://help.mailup.com/display/mailupapi/Manage+Lists+and+Groups#ManageListsandGroups-UpdateList)|
+|DeleteList|`DELETE /ConsoleService.svc/Console/List/{id_List} `|[Delete List](https://help.mailup.com/display/mailupapi/Manage+Lists+and+Groups#ManageListsandGroups-DeleteList)|
+|GetIdUser|`GET /ConsoleService.svc/Console/Authentication/Info`| [Get user ID](https://help.mailup.com/display/mailupapi/Accounts) |
