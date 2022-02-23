@@ -52,17 +52,17 @@ Email
 | ------------- | ------------- |-----------|
 |SendSingleNewsletter|Use Transactional Email API or SMTP+  | [Read more]() |
 |CreateNewsletter|`POST /ConsoleService.svc/Console/List/{id_List}/Email`  | [Create newsletter](https://help.mailup.com/display/mailupapi/Email+messages#Emailmessages-Createamessage) |
-|CloneMessage|``||
-|GetNewsletters|``||
-|GetMessages|``||
-|GetNewsletterCode|``||
-|SendMessageNL|``||
-|SendNewsletter|``||
-|SendNewsletterFast|``||
-|GetNewsletterDeliveryStatus|``||
-|GetNewsletterQueues|``||
-|StartDelivery|``||
-|RemoveNewsletterQueue|``||
+|CloneMessage|`POST /ConsoleService.svc/Console/list/{id_List}/Email/{id_Message}`||
+|GetNewsletters|`GET /ConsoleService.svc/Console/List/{id_List}/Emails`||
+|GetMessages|A method that returns only the non-cloned email messages is no more available ||
+|GetNewsletterCode|`GET /ConsoleService.svc/Console/list/{id_List}/Email/{id_Message}`||
+|SendMessageNL|Has to be replaced by a sequence of steps|[Read more]() |
+|SendNewsletter|`POST /ConsoleService.svc/Console/List/{id_List}/Email/{id_Message}/Send`||
+|SendNewsletterFast|First create the email message using `POST /ConsoleService.svc/Console/List/{id_List}/Email` then send it out with `POST /ConsoleService.svc/Console/List/{id_List}/Email/{id_Message}/Send`||
+|GetNewsletterDeliveryStatus|`GET /ConsoleService.svc/Console/List/{id_List}/Email/{id_Message}/SendHistory` (past sendouts) `GET /ConsoleService.svc/Console/Email/Sendings/Immediate` (in progress) `GET /ConsoleService.svc/Console/Email/Sendings/Deferred` (still planned)||
+|GetNewsletterQueues|`GET /ConsoleService.svc/Console/Email/Sendings/Immediate` (ongoing) `GET /ConsoleService.svc/Console/Email/Sendings/Deferred` (planned) `GET /ConsoleService.svc/Console/Email/Sendings/Undefined` (unplanned)||
+|StartDelivery|`POST /ConsoleService.svc/Console/Email/Sendings/{id_Sending}/Immediate` (schedule an immediate dispatch) `POST /ConsoleService.svc/Console/Email/Sendings/{id_Sending}/Deferred` (schedule a deferred dispatch)||
+|RemoveNewsletterQueue|`DELETE /ConsoleService.svc/Console/Email/Sendings/{id_Sending}` Note: in case of ongoing sending you must must stop it first using `POST /ConsoleService.svc/Console/Email/Sendings/{id_Sending}/Stop`||
 
 
 ## MailUpReport methods
